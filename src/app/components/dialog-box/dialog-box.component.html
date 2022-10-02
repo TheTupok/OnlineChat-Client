@@ -1,43 +1,31 @@
-<div class="header w-100">
-
+<div class="header w-100 h-auto">
+    <label>IMG GROUP AND NAME</label>
 </div>
 
-<div class="chat-area">
-  <div class="chat-bubble-container my-message">
+<div class="chat-area" id="chatArea">
+  <div *ngFor="let message of this.dataMessage" class="chat-bubble-container">
     <div class="chat-bubble">
-      Hello World!
+      {{message.message}}
       <div class="chat-date">
-        23:59:07
-      </div>
-    </div>
-  </div>
-  <div class="chat-bubble-container">
-    <div class="chat-bubble">
-      Hello World!!
-      <div class="chat-date">
-        23:59:50
-      </div>
-    </div>
-  </div>
-  <div class="chat-bubble-container">
-    <div class="chat-bubble">
-      Hello World!!!
-      <div class="chat-date">
-        00:05:01
+        {{message.time}}
       </div>
     </div>
   </div>
 </div>
 
 <form [formGroup]="messageForm">
-  <div class="footer w-100 d-flex align-items-center justify-content-center">
+  <div class="footer w-100 d-flex align-items-center justify-content-center h-auto">
     <textarea
       id="textareaMessage"
       formControlName="message"
       type="text"
-      class="input-message-entry me-1 ps-2"
+      class="input-message-entry me-1 ps-2 m-2"
       placeholder="Enter your message here..."
+      (keydown)="focusTextareaMessage($event)"
     ></textarea>
-    <i class="fa-solid fa-right-to-bracket fa-2x ms-2"></i>
+    <i
+      class="fa-solid fa-right-to-bracket fa-2x ms-2"
+      (click)="sendDataMessage()"
+    ></i>
   </div>
 </form>

@@ -8,6 +8,8 @@ import {GroupListComponent} from './components/group-list/group-list.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from "@angular/forms";
+import {ApiModule, BASE_PATH} from "./core/services/swagger-gen";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -20,9 +22,16 @@ import {ReactiveFormsModule} from "@angular/forms";
     AppRoutingModule,
     NgbModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ApiModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: BASE_PATH,
+      useValue: 'http://localhost:5000'
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,74 +1,74 @@
 .header {
-  background-color: #FFFFFF;
-  height: 10%;
-  border-bottom: 1px solid #EEEEEE;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #EEEEEE;
 }
 
 .chat-area {
-  width: 100%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-
-  .chat-bubble-container {
-    display: flex;
     width: 100%;
-    justify-content: flex-start;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
 
-    &.my-message {
-      justify-content: flex-end;
+    .chat-bubble-container {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
 
-      .chat-bubble {
-        border-radius: 3vh 3vh 0 3vh;
-      }
+        &.my-message {
+            justify-content: flex-end;
+
+            .chat-bubble {
+                border-radius: 3vh 3vh 0 3vh;
+            }
+        }
+
+        .chat-bubble {
+            white-space: pre-line;
+            background: #F4F4F7;
+            padding: 1vh 10vh 2vh 1vh;
+            margin: 2vh;
+            border-radius: 3vh 3vh 3vh 0;
+            width: fit-content;
+            position: relative;
+            font-size: 2vh;
+
+            .chat-date {
+                position: absolute;
+                bottom: 1vh;
+                right: 1vh;
+                font-size: 1.2vh;
+                color: black;
+            }
+        }
     }
-
-    .chat-bubble {
-      background: #F4F4F7;
-      padding: 1vh 10vh 2vh 1vh;
-      margin: 2vh;
-      border-radius: 3vh 3vh 3vh 0;
-      width: fit-content;
-      position: relative;
-      font-size: 2vh;
-
-      .chat-date {
-        position: absolute;
-        bottom: 1vh;
-        right: 1vh;
-        font-size: 1.2vh;
-        color: black;
-      }
-    }
-  }
 }
 
 .chat-area > :first-child {
-  margin-top: auto;
+    margin-top: auto;
 }
 
 .footer {
-  background-color: #FFFFFF;
-  height: 10%;
-  border-top: 1px solid #EEEEEE;
-  position: absolute;
-  bottom: 0;
+    background-color: #FFFFFF;
+    border-top: 1px solid #EEEEEE;
+    position: absolute;
+    bottom: 0;
 
-  .input-message-entry {
-    display: inline-block;
-    width: 90%;
-    height: 70%;
-    border-radius: 15px;
-    border: none;
-    background-color: #FAFAFA;
-    font-size: 3vh;
-    resize: none;
-    line-height: 6.7vh;
-  }
+    .input-message-entry {
+        display: inline-block;
+        width: 90%;
+        height: 8vh;
+        border-radius: 15px;
+        border: none;
+        background-color: #FAFAFA;
+        font-size: 3vh;
+        resize: none;
+        line-height: 6.7vh;
+    }
 
-  i {
-    cursor: pointer;
-    color: #4CAF7F;
-    font-size: 4vh;
-  }
+    i {
+        cursor: pointer;
+        color: #4CAF7F;
+        font-size: 4vh;
+    }
 }
