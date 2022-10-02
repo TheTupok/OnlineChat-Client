@@ -1,0 +1,43 @@
+<div class="header w-100">
+
+</div>
+
+<div class="chat-area">
+  <div class="chat-bubble-container my-message">
+    <div class="chat-bubble">
+      Hello World!
+      <div class="chat-date">
+        23:59:07
+      </div>
+    </div>
+  </div>
+  <div class="chat-bubble-container">
+    <div class="chat-bubble">
+      Hello World!!
+      <div class="chat-date">
+        23:59:50
+      </div>
+    </div>
+  </div>
+  <div class="chat-bubble-container">
+    <div class="chat-bubble">
+      Hello World!!!
+      <div class="chat-date">
+        00:05:01
+      </div>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="messageForm">
+  <div class="footer w-100 d-flex align-items-center justify-content-center">
+    <textarea
+      id="textareaMessage"
+      formControlName="message"
+      type="text"
+      class="input-message-entry me-1 ps-2"
+      placeholder="Enter your message here..."
+    ></textarea>
+    <i class="fa-solid fa-right-to-bracket fa-2x ms-2"></i>
+  </div>
+</form>
