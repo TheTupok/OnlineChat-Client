@@ -15,9 +15,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.localStorageService.getUserInfo() == null) {
-            this.localStorageService.setInfoUser(null).then()
-        }
+
         this.socketService.setupSocketConnection();
     }
 

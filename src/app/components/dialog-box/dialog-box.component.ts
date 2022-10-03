@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {LocalStorageService} from "../../core/services/localStorage.service";
 import {SocketioService} from "../../socketio.service";
 import {IMessage} from "../../Models/IMessage";
+import {IUser} from "../../Models/IUser";
 
 @Component({
     selector: 'app-dialog-box',
@@ -15,26 +16,29 @@ export class DialogBoxComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private localStorageService: LocalStorageService,
                 private socketService: SocketioService,
-                ) {
+    ) {
     }
 
     dataMessage: IMessage[];
     chatArea: HTMLElement;
-    userInfo: {
-        userName: '',
-        userPicture: ''
-    }
+    userInfo: IUser
 
     ngOnInit(): void {
+        if (this.localStorageService.getUserInfo() == null) {
+            this.localStorageService.setInfoUser(null).then(data => {
+                this.userInfo = data!;
+            })
+        } else {
+            this.userInfo = this.localStorageService.getUserInfo()
+        }
         this._createMessageForm()
         this.initDataMessages();
-        this.userInfo = this.localStorageService.getUserInfo()
         this.chatArea = document.getElementById('chatArea') as HTMLElement;
 
         const textareaMessage = document.getElementById('textareaMessage') as HTMLElement;
         this.messageForm.controls['message'].valueChanges
             .subscribe((newValue: string) => {
-                if (newValue == '') textareaMessage.style.lineHeight = '6.7vh';
+                if (newValue == null) textareaMessage.style.lineHeight = '6.7vh';
                 else textareaMessage.style.lineHeight = '4vh';
             })
     }
@@ -48,7 +52,6 @@ export class DialogBoxComponent implements OnInit {
     public initDataMessages() {
         this.socketService.getMessage().subscribe(data => {
             this.dataMessage = data;
-            console.log(this.dataMessage)
             setTimeout(() => this.chatArea.scrollTo(0, this.chatArea.scrollHeight), 0)
         })
     }
@@ -56,13 +59,15 @@ export class DialogBoxComponent implements OnInit {
     public sendDataMessage() {
         const message = this.messageForm.controls['message'].value;
         const userInfo = this.localStorageService.getUserInfo()
-        if (this.messageForm.controls['message'].value != '') {
+        if (this.messageForm.controls['message'].value != null) {
             const data = {
                 "message": message,
-                "userName": userInfo.userName
+                "userName": userInfo.userName,
+                "userPicture": userInfo.userPicture
             }
+            console.log(message)
             this.socketService.sendMessage(data)
-            this.messageForm.controls['message'].setValue('')
+            setTimeout(() => this.messageForm.controls['message'].reset(), 0)
         }
     }
 
