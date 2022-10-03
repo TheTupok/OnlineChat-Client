@@ -3,9 +3,13 @@
 </div>
 
 <div class="chat-area" id="chatArea">
-  <div *ngFor="let message of this.dataMessage" class="chat-bubble-container">
+  <div
+      *ngFor="let message of this.dataMessage" class="chat-bubble-container"
+      [ngClass]="{'my-message': message.userName == this.userInfo.userName}"
+  >
     <div class="chat-bubble">
       {{message.message}}
+        {{message.userName}}
       <div class="chat-date">
         {{message.time}}
       </div>

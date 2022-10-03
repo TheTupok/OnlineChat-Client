@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {MessageService} from "../../core/services/swagger-gen";
+import {LocalStorageService} from "../../core/services/localStorage.service";
+import {SocketioService} from "../../socketio.service";
+import {IMessage} from "../../Models/IMessage";
 
 @Component({
     selector: 'app-dialog-box',
@@ -11,15 +13,22 @@ export class DialogBoxComponent implements OnInit {
     messageForm!: FormGroup;
 
     constructor(private fb: FormBuilder,
-                private databaseService: MessageService) {
+                private localStorageService: LocalStorageService,
+                private socketService: SocketioService,
+                ) {
     }
 
-    dataMessage: any
+    dataMessage: IMessage[];
     chatArea: HTMLElement;
+    userInfo: {
+        userName: '',
+        userPicture: ''
+    }
 
     ngOnInit(): void {
         this._createMessageForm()
         this.initDataMessages();
+        this.userInfo = this.localStorageService.getUserInfo()
         this.chatArea = document.getElementById('chatArea') as HTMLElement;
 
         const textareaMessage = document.getElementById('textareaMessage') as HTMLElement;
@@ -37,23 +46,23 @@ export class DialogBoxComponent implements OnInit {
     }
 
     public initDataMessages() {
-        this.databaseService.getAllMessages().subscribe(data => {
+        this.socketService.getMessage().subscribe(data => {
             this.dataMessage = data;
+            console.log(this.dataMessage)
             setTimeout(() => this.chatArea.scrollTo(0, this.chatArea.scrollHeight), 0)
         })
     }
 
     public sendDataMessage() {
         const message = this.messageForm.controls['message'].value;
+        const userInfo = this.localStorageService.getUserInfo()
         if (this.messageForm.controls['message'].value != '') {
             const data = {
                 "message": message,
-                "fromUser": 'User'
+                "userName": userInfo.userName
             }
-            this.databaseService.addMessageToDB(data).subscribe(() => {
-                this.initDataMessages()
-                this.messageForm.controls['message'].setValue('')
-            })
+            this.socketService.sendMessage(data)
+            this.messageForm.controls['message'].setValue('')
         }
     }
 

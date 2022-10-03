@@ -8,31 +8,27 @@ import {GroupListComponent} from './components/group-list/group-list.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from "@angular/forms";
-import {ApiModule, BASE_PATH} from "./core/services/swagger-gen";
 import {HttpClientModule} from "@angular/common/http";
+import {SocketioService} from "./socketio.service";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DialogBoxComponent,
-    GroupListComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    ApiModule,
-    HttpClientModule
-  ],
-  providers: [
-    {
-      provide: BASE_PATH,
-      useValue: 'http://localhost:5000'
-    },
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        DialogBoxComponent,
+        GroupListComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        FontAwesomeModule,
+        ReactiveFormsModule,
+        HttpClientModule
+    ],
+    providers: [
+        SocketioService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }
