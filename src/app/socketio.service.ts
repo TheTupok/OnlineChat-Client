@@ -24,12 +24,12 @@ export class SocketioService {
     }
 
     sendMessage(data: ISendMessage) {
-        this.socket.emit('send message', data)
+        this.socket.emit('sendMessage', data)
     }
 
     getMessage() {
         return new Observable((observer: Observer<any>) => {
-            this.socket.on('getallmessages', (message: string) => {
+            this.socket.on('getAllMessages', (message: string) => {
                 observer.next(JSON.parse(message))
             })
         })
