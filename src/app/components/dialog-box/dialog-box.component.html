@@ -3,33 +3,37 @@
 </div>
 
 <div class="chat-area" id="chatArea">
-  <div
-      *ngFor="let message of this.dataMessage" class="chat-bubble-container"
-      [ngClass]="{'my-message': message.userName == this.userInfo.userName}"
-  >
-    <div class="chat-bubble">
-      {{message.message}}
-        {{message.userName}}
-      <div class="chat-date">
-        {{message.time}}
-      </div>
+    <div
+        *ngFor="let message of this.dataMessage" class="chat-bubble-container"
+        [ngClass]="{'my-message': message.userName == this.userInfo.userName}"
+    >
+        <img
+            *ngIf="message.userName != this.userInfo.userName"
+            class="user-image" alt="User avatar"
+            [src]="this.userInfo.userPicture"
+        >
+        <div class="chat-bubble">
+            {{message.message}}
+            <div class="chat-date">
+                {{message.time}}
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <form [formGroup]="messageForm">
-  <div class="footer w-100 d-flex align-items-center justify-content-center h-auto">
+    <div class="footer w-100 d-flex align-items-center justify-content-center h-auto">
     <textarea
-      id="textareaMessage"
-      formControlName="message"
-      type="text"
-      class="input-message-entry me-1 ps-2 m-2"
-      placeholder="Enter your message here..."
-      (keydown)="focusTextareaMessage($event)"
+        id="textareaMessage"
+        formControlName="message"
+        type="text"
+        class="input-message-entry me-1 ps-2 m-2"
+        placeholder="Enter your message here..."
+        (keydown)="focusTextareaMessage($event)"
     ></textarea>
-    <i
-      class="fa-solid fa-right-to-bracket fa-2x ms-2"
-      (click)="sendDataMessage()"
-    ></i>
-  </div>
+        <i
+            class="fa-solid fa-right-to-bracket fa-2x ms-2"
+            (click)="sendDataMessage()"
+        ></i>
+    </div>
 </form>

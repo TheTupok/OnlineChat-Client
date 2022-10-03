@@ -11,6 +11,7 @@
     overflow-x: auto;
 
     .chat-bubble-container {
+        position: relative;
         display: flex;
         width: 100%;
         justify-content: flex-start;
@@ -21,6 +22,14 @@
             .chat-bubble {
                 border-radius: 3vh 3vh 0 3vh;
             }
+        }
+
+        .user-image {
+            width: 6vh;
+            height: 6vh;
+            border-radius: 50%;
+            margin-top: auto;
+            margin-bottom: -1%;
         }
 
         .chat-bubble {
