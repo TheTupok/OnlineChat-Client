@@ -7,23 +7,25 @@ import {RandomPicture} from "random-picture/dist";
 
 @Injectable()
 export class LocalStorageService {
-    private STORAGE_KEY = 'userInfo'
+    private storageUserInfoKey = 'userInfo'
 
     constructor(@Inject(SESSION_STORAGE) private storage: StorageService) {
 
     }
 
     getUserInfo() {
-        return this.storage.get(this.STORAGE_KEY)
+        return this.storage.get(this.storageUserInfoKey)
     }
 
-    async setInfoUser(data?: any) {
+    async setInfoUser(data: any) {
         if (data == null) {
+            const userPicture = await RandomPicture()
             const userInfo = {
                 'userName': generateUsername(),
-                'userPicture': await RandomPicture()
+                'userPicture': userPicture.url
             }
-            this.storage.set(this.STORAGE_KEY, userInfo)
+            this.storage.set(this.storageUserInfoKey, userInfo)
+            return userInfo
         }
     }
 }
