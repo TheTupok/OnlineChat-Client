@@ -1,0 +1,34 @@
+.input-group > input {
+    font-size: 2vh;
+    background-color: #F4F4F7;
+}
+
+.group-area {
+    font-size: 2vh;
+
+    .group-row {
+
+        &:hover {
+            background-color: #DADCDB;
+        }
+
+        .group-image {
+            width: 6vh;
+            height: 6vh;
+            border-radius: 50%;
+        }
+
+        .time-last-message {
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: #595959;
+        }
+
+        .last-message {
+            color: #676767;
+        }
+    }
+}
+
+

@@ -4,6 +4,7 @@ import {LocalStorageService} from "../../core/services/localStorage.service";
 import {SocketioService} from "../../socketio.service";
 import {IMessage} from "../../Models/IMessage";
 import {IUser} from "../../Models/IUser";
+import {GroupSelectionService} from "../../core/services/group-selection.service";
 
 @Component({
     selector: 'app-dialog-box',
@@ -16,16 +17,18 @@ export class DialogBoxComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private localStorageService: LocalStorageService,
                 private socketService: SocketioService,
+                private groupSelectionService: GroupSelectionService
     ) {
     }
 
     dataMessage: IMessage[];
     chatArea: HTMLElement;
     userInfo: IUser
+    currentGroup: string
 
     ngOnInit(): void {
         if (this.localStorageService.getUserInfo() == null) {
-            this.localStorageService.setInfoUser(null).then(data => {
+            this.localStorageService.setInfoUser().then(data => {
                 this.userInfo = data!;
             })
         } else {
@@ -41,6 +44,12 @@ export class DialogBoxComponent implements OnInit {
                 if (newValue == null) textareaMessage.style.lineHeight = '6.7vh';
                 else textareaMessage.style.lineHeight = '4vh';
             })
+
+        this.groupSelectionService.getCurrentGroup().subscribe((data: string) => {
+            this.socketService.setCurrentGroup(data)
+            this.currentGroup = data
+        })
+        this.groupSelectionService.firstGroup()
     }
 
     private _createMessageForm() {
@@ -63,9 +72,9 @@ export class DialogBoxComponent implements OnInit {
             const data = {
                 "message": message,
                 "userName": userInfo.userName,
-                "userPicture": userInfo.userPicture
+                "userPicture": userInfo.userPicture,
+                "groupMessage": this.currentGroup
             }
-            console.log(message)
             this.socketService.sendMessage(data)
             setTimeout(() => this.messageForm.controls['message'].reset(), 0)
         }

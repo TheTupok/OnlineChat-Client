@@ -27,6 +27,10 @@ export class SocketioService {
         this.socket.emit('sendMessage', data)
     }
 
+    setCurrentGroup(group: string) {
+        this.socket.emit('currentGroup', group)
+    }
+
     getMessage() {
         return new Observable((observer: Observer<any>) => {
             this.socket.on('getAllMessages', (message: string) => {
