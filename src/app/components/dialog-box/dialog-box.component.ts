@@ -6,6 +6,7 @@ import {IMessage} from "../../Models/IMessage";
 import {IUser} from "../../Models/IUser";
 import {GroupSelectionService} from "../../core/services/group-selection.service";
 import {IGroup} from "../../Models/IGroup";
+import {timer} from "rxjs";
 
 @Component({
     selector: 'app-dialog-box',
@@ -59,7 +60,7 @@ export class DialogBoxComponent implements OnInit {
     }
 
     public initDataMessages() {
-        this.socketService.getMessage().subscribe(data => {
+        this.socketService.getMessageGroup().subscribe(data => {
             this.dataMessage = data;
             setTimeout(() => this.chatArea.scrollTo(0, this.chatArea.scrollHeight), 0)
         })
@@ -76,7 +77,7 @@ export class DialogBoxComponent implements OnInit {
                 "groupMessage": this.currentGroup.nameGroup
             }
             this.socketService.sendMessage(data)
-            setTimeout(() => this.messageForm.controls['message'].reset(), 0)
+            timer(10).subscribe(() => this.messageForm.controls['message'].reset())
         }
     }
 
