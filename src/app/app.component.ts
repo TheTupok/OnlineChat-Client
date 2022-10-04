@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalStorageService} from "./core/services/localStorage.service";
-import {SocketioService} from "./socketio.service";
+import {SocketioService} from "./core/services/socketio.service";
 
 @Component({
     selector: 'app-root',

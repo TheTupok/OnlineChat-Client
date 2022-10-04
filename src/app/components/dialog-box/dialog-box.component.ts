@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {LocalStorageService} from "../../core/services/localStorage.service";
-import {SocketioService} from "../../socketio.service";
+import {SocketioService} from "../../core/services/socketio.service";
 import {IMessage} from "../../Models/IMessage";
 import {IUser} from "../../Models/IUser";
 import {GroupSelectionService} from "../../core/services/group-selection.service";
+import {IGroup} from "../../Models/IGroup";
 
 @Component({
     selector: 'app-dialog-box',
@@ -24,17 +25,21 @@ export class DialogBoxComponent implements OnInit {
     dataMessage: IMessage[];
     chatArea: HTMLElement;
     userInfo: IUser
-    currentGroup: string
+    currentGroup: IGroup
 
     ngOnInit(): void {
+        this._createMessageForm();
         if (this.localStorageService.getUserInfo() == null) {
             this.localStorageService.setInfoUser().then(data => {
                 this.userInfo = data!;
             })
         } else {
-            this.userInfo = this.localStorageService.getUserInfo()
+            this.userInfo = this.localStorageService.getUserInfo();
         }
-        this._createMessageForm()
+        this.groupSelectionService.getCurrentGroup().subscribe((data: IGroup) => {
+            this.socketService.setCurrentGroup(data)
+            this.currentGroup = data
+        });
         this.initDataMessages();
         this.chatArea = document.getElementById('chatArea') as HTMLElement;
 
@@ -43,13 +48,8 @@ export class DialogBoxComponent implements OnInit {
             .subscribe((newValue: string) => {
                 if (newValue == null) textareaMessage.style.lineHeight = '6.7vh';
                 else textareaMessage.style.lineHeight = '4vh';
-            })
+            });
 
-        this.groupSelectionService.getCurrentGroup().subscribe((data: string) => {
-            this.socketService.setCurrentGroup(data)
-            this.currentGroup = data
-        })
-        this.groupSelectionService.firstGroup()
     }
 
     private _createMessageForm() {
@@ -73,7 +73,7 @@ export class DialogBoxComponent implements OnInit {
                 "message": message,
                 "userName": userInfo.userName,
                 "userPicture": userInfo.userPicture,
-                "groupMessage": this.currentGroup
+                "groupMessage": this.currentGroup.nameGroup
             }
             this.socketService.sendMessage(data)
             setTimeout(() => this.messageForm.controls['message'].reset(), 0)

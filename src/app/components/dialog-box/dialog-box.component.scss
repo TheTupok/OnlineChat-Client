@@ -1,6 +1,13 @@
 .header {
     background-color: #FFFFFF;
     border-bottom: 1px solid #EEEEEE;
+    font-size: 2vh;
+
+    img {
+        width: 6vh;
+        height: 6vh;
+        border-radius: 50%;
+    }
 }
 
 .chat-area {

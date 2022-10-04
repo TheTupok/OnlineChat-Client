@@ -9,7 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {SocketioService} from "./socketio.service";
+import {SocketioService} from "./core/services/socketio.service";
 
 @NgModule({
     declarations: [

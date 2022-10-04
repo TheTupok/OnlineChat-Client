@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { GroupSelectionService } from 'src/app/core/services/group-selection.service';
+import {GroupSelectionService} from 'src/app/core/services/group-selection.service';
+import {IGroup} from "../../Models/IGroup";
+import {SocketioService} from "../../core/services/socketio.service";
 
 @Component({
     selector: 'app-group-list',
@@ -8,10 +10,17 @@ import { GroupSelectionService } from 'src/app/core/services/group-selection.ser
 })
 export class GroupListComponent implements OnInit {
 
-    constructor(private groupSelectionService: GroupSelectionService) {
+    groupList: IGroup[]
+
+    constructor(private groupSelectionService: GroupSelectionService,
+                private socketService: SocketioService) {
     }
 
     ngOnInit(): void {
+        this.socketService.getGroupList().subscribe(data => {
+            this.groupList = data
+            this.groupSelectionService.selectFirstGroup(data)
+        })
     }
 
     groupSelection(event: MouseEvent) {
