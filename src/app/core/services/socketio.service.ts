@@ -48,7 +48,8 @@ export class SocketioService {
         })
     }
 
-    getGroupList() {
+    getGroupList(term?: string) {
+        this.socket.emit('getGroupList', term)
         return new Observable((observer: Observer<any>) => {
             this.socket.on('groupList', (message: string) => {
                 observer.next(JSON.parse(message))

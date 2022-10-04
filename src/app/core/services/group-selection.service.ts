@@ -23,9 +23,11 @@ export class GroupSelectionService {
     }
 
     selectFirstGroup(groups: IGroup[]) {
-        this.groupList = groups
-        timer(10).subscribe(() => this.setCurrentGroupElement(groups[0]))
-        this.setCurrentGroup(groups[0])
+        if(!(groups.length == 0)){
+            this.groupList = groups
+            timer(10).subscribe(() => this.setCurrentGroupElement(groups[0]))
+            this.setCurrentGroup(groups[0])
+        }
     }
 
     choiceGroup(event: MouseEvent) {

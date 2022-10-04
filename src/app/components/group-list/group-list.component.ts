@@ -3,6 +3,7 @@ import {GroupSelectionService} from 'src/app/core/services/group-selection.servi
 import {IGroup} from "../../Models/IGroup";
 import {SocketioService} from "../../core/services/socketio.service";
 import {IMessage} from "../../Models/IMessage";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
     selector: 'app-group-list',
@@ -11,17 +12,37 @@ import {IMessage} from "../../Models/IMessage";
 })
 export class GroupListComponent implements OnInit {
 
+    searchForm: FormGroup
     groupList: IGroup[]
+    termGroup: string = ''
 
     constructor(private groupSelectionService: GroupSelectionService,
-                private socketService: SocketioService) {
+                private socketService: SocketioService,
+                private fb: FormBuilder) {
     }
 
     ngOnInit(): void {
-        this.socketService.getGroupList().subscribe(data => {
+        this._createSearchForm();
+        this.getGroupList(this.termGroup)
+
+        this.searchForm.controls['searchTermGroup'].valueChanges
+            .subscribe(data => {
+                this.termGroup = data;
+                this.getGroupList(data)
+            })
+    }
+
+    private _createSearchForm() {
+        this.searchForm = this.fb.group({
+            searchTermGroup: ''
+        })
+    }
+
+    getGroupList(term: string) {
+        this.socketService.getGroupList(term).subscribe(data => {
             this.groupList = data
-            this.setLastMessageGroup(data)
             this.groupSelectionService.selectFirstGroup(data)
+            this.setLastMessageGroup(data)
         });
     }
 
@@ -37,6 +58,7 @@ export class GroupListComponent implements OnInit {
     }
 
     groupSelection(event: MouseEvent) {
+        console.log(this.groupList)
         this.groupSelectionService.choiceGroup(event)
     }
 }
