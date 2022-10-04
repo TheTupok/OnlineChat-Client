@@ -17,9 +17,9 @@
     <div
         *ngFor="let group of this.groupList"
         [attr.data-group]="group.nameGroup"
-        class="group-row row py-2"
+        class="group-row row h-auto"
         (click)="groupSelection($event)">
-        <div class="col-2 p-0 ms-1">
+        <div class="col-2 p-0 ms-1 my-auto">
             <img
                 class="group-image" alt="User avatar"
                 [src]="group.imageGroup"
