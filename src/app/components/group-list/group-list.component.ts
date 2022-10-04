@@ -58,7 +58,6 @@ export class GroupListComponent implements OnInit {
     }
 
     groupSelection(event: MouseEvent) {
-        console.log(this.groupList)
         this.groupSelectionService.choiceGroup(event)
     }
 }

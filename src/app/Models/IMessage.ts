@@ -3,5 +3,6 @@ export interface IMessage {
     message: string,
     userName: string,
     time: string
-    groupMessage: string
+    groupMessage: string,
+    userPicture: string
 }

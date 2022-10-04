@@ -7,6 +7,8 @@ import {IUser} from "../../Models/IUser";
 import {GroupSelectionService} from "../../core/services/group-selection.service";
 import {IGroup} from "../../Models/IGroup";
 import {timer} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {EditUserComponent} from "../modals/edit-user/edit-user.component";
 
 @Component({
     selector: 'app-dialog-box',
@@ -19,7 +21,8 @@ export class DialogBoxComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private localStorageService: LocalStorageService,
                 private socketService: SocketioService,
-                private groupSelectionService: GroupSelectionService
+                private groupSelectionService: GroupSelectionService,
+                public dialog: MatDialog
     ) {
     }
 
@@ -30,13 +33,13 @@ export class DialogBoxComponent implements OnInit {
 
     ngOnInit(): void {
         this._createMessageForm();
-        if (this.localStorageService.getUserInfo() == null) {
-            this.localStorageService.setInfoUser().then(data => {
-                this.userInfo = data!;
+        this.localStorageService.checkUserLocalStorage().then(user => {
+            this.userInfo = user;
+        })
+        this.localStorageService.getCurrentUser()
+            .subscribe((user: IUser) => {
+                this.userInfo = user;
             })
-        } else {
-            this.userInfo = this.localStorageService.getUserInfo();
-        }
         this.groupSelectionService.getCurrentGroup().subscribe((data: IGroup) => {
             this.socketService.setCurrentGroup(data)
             this.currentGroup = data
@@ -47,7 +50,7 @@ export class DialogBoxComponent implements OnInit {
         const textareaMessage = document.getElementById('textareaMessage') as HTMLElement;
         this.messageForm.controls['message'].valueChanges
             .subscribe((newValue: string) => {
-                if (newValue == null) textareaMessage.style.lineHeight = '6.7vh';
+                if (newValue == '' || newValue == null) textareaMessage.style.lineHeight = '6.7vh';
                 else textareaMessage.style.lineHeight = '4vh';
             });
 
@@ -59,6 +62,13 @@ export class DialogBoxComponent implements OnInit {
         })
     }
 
+    openDialog() {
+        this.dialog.open(EditUserComponent, {
+            height: '40%',
+            width: '20%'
+        });
+    }
+
     public initDataMessages() {
         this.socketService.getMessageGroup().subscribe(data => {
             this.dataMessage = data;
@@ -68,12 +78,11 @@ export class DialogBoxComponent implements OnInit {
 
     public sendDataMessage() {
         const message = this.messageForm.controls['message'].value;
-        const userInfo = this.localStorageService.getUserInfo()
         if (this.messageForm.controls['message'].value != null) {
             const data = {
                 "message": message,
-                "userName": userInfo.userName,
-                "userPicture": userInfo.userPicture,
+                "userName": this.userInfo.userName,
+                "userPicture": this.userInfo.userPicture,
                 "groupMessage": this.currentGroup.nameGroup
             }
             this.socketService.sendMessage(data)
