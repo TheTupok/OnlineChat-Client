@@ -1,3 +1,9 @@
+%TruncateString {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .input-group > input {
     font-size: 2vh;
     background-color: #F4F4F7;
@@ -18,15 +24,26 @@
             border-radius: 50%;
         }
 
-        .time-last-message {
-            position: absolute;
-            right: 0;
-            top: 0;
-            color: #595959;
-        }
-
         .last-message {
-            color: #676767;
+
+            .name-group {
+                @extend %TruncateString;
+                width: 80%;
+            }
+
+            .time-last-message {
+                position: absolute;
+                right: 0;
+                top: 0;
+                padding: 0;
+                color: #595959;
+            }
+
+            .text-last-message {
+                @extend %TruncateString;
+                padding: 0;
+                color: #676767;
+            }
         }
     }
 }
