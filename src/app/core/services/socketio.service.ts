@@ -32,9 +32,17 @@ export class SocketioService {
         this.socket.emit('currentGroup', group)
     }
 
-    getMessage() {
+    getAllMessages() {
         return new Observable((observer: Observer<any>) => {
             this.socket.on('getAllMessages', (message: string) => {
+                observer.next(JSON.parse(message))
+            })
+        })
+    }
+
+    getMessageGroup() {
+        return new Observable((observer: Observer<any>) => {
+            this.socket.on('getGroupMessage', (message: string) => {
                 observer.next(JSON.parse(message))
             })
         })
