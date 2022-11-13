@@ -1,12 +1,11 @@
-<form [formGroup]="searchForm">
+<form>
     <div class="row mt-3">
         <div class="mx-auto w-75">
             <div class="input-group">
                 <input
-                    class="form-control border rounded-pill"
-                    type="search"
-                    placeholder="Search..."
-                    formControlName="searchTermGroup"
+                        class="form-control border rounded-pill"
+                        type="search"
+                        placeholder="Search..."
                 >
             </div>
         </div>
@@ -15,23 +14,40 @@
 
 <div class="container mt-2 group-area">
     <div
-        *ngFor="let group of this.groupList"
-        [attr.data-group]="group.nameGroup"
-        class="group-row row h-auto"
-        (click)="groupSelection($event)">
+            [attr.data-group]="'NameGroup'"
+            class="group-row row h-auto">
         <div class="col-2 p-0 ms-1 my-auto">
             <img
-                class="group-image" alt="User avatar"
-                [src]="group.imageGroup"
+                    class="group-image" alt="User avatar"
+                    [src]=""
             >
         </div>
         <div class="last-message col-9 ps-3">
             <div class="row position-relative">
-                <div class="name-group p-0">{{group.nameGroup}}</div>
-                <div class="time-last-message w-auto">{{group.timeLastMessage}}</div>
+                <div class="name-group p-0">Имя группы</div>
+                <div class="time-last-message w-auto">12:12:12</div>
+                <div class="row">
+                    <label class="text-last-message">Последнее сообщение</label>
+                </div>
             </div>
-            <div class="row">
-                <label class="text-last-message">{{group.lastMessage}}</label>
+        </div>
+    </div>
+    <div
+            [attr.data-group]="'NameGroup2'"
+            class="group-row row h-auto">
+        <div class="col-2 p-0 ms-1 my-auto">
+            <img
+                    class="group-image" alt="User avatar"
+                    [src]=""
+            >
+        </div>
+        <div class="last-message col-9 ps-3">
+            <div class="row position-relative">
+                <div class="name-group p-0">Имя группы2</div>
+                <div class="time-last-message w-auto">12:12:12</div>
+                <div class="row">
+                    <label class="text-last-message">Последнее сообщение</label>
+                </div>
             </div>
         </div>
     </div>

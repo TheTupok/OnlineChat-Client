@@ -1,55 +1,42 @@
 <div class="header-box">
     <div
         class="info-current-group h-auto"
-        *ngIf="this.currentGroup"
     >
-        <img alt="" [src]="this.currentGroup.imageGroup" class="m-1">
-        <label>{{this.currentGroup.nameGroup}}</label>
+        <img alt="" [src]="" class="m-1">
+        <label>Name Group</label>
     </div>
-    <button
-        (click)="openDialog()"
-        class="btn-edit-user me-2 position-absolute top-50 end-0 translate-middle-y"
-    >Edit User
-    </button>
 </div>
 <div class="chat-area" id="chatArea">
     <div
-        *ngFor="let message of this.dataMessage" class="chat-bubble-container"
-        [ngClass]="{'my-message': message.userName == this.userInfo.userName}"
+        class="chat-bubble-container"
     >
         <img
-            *ngIf="message.userName != this.userInfo.userName"
             class="user-image" alt="User avatar"
-            [src]="this.message.userPicture"
-            [title]="this.message.userName"
+            [src]=""
         >
         <div class="chat-bubble">
             <div>
                 <label
-                    *ngIf="message.userName != this.userInfo.userName"
                     class="username mb-2"
-                >{{message.userName}}</label>
+                >Имя пользователя</label>
             </div>
-            <label>{{message.message}}</label>
+            <label>Сообщение</label>
             <div class="chat-date">
-                {{message.time}}
+                12:22:12
             </div>
         </div>
     </div>
 </div>
-<form [formGroup]="messageForm">
+<form>
     <div class="footer w-100 d-flex align-items-center justify-content-center h-auto">
     <textarea
         id="textareaMessage"
-        formControlName="message"
         type="text"
         class="input-message-entry me-1 ps-2 m-2"
         placeholder="Enter your message here..."
-        (keydown)="focusTextareaMessage($event)"
     ></textarea>
         <i
             class="fa-solid fa-right-to-bracket fa-2x mx-auto"
-            (click)="sendDataMessage()"
         ></i>
     </div>
 </form>

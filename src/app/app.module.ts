@@ -9,9 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {SocketioService} from "./core/services/socketio.service";
-import { EditUserComponent } from './components/modals/edit-user/edit-user.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -21,8 +19,7 @@ import {MatInputModule} from "@angular/material/input";
     declarations: [
         AppComponent,
         DialogBoxComponent,
-        GroupListComponent,
-        EditUserComponent
+        GroupListComponent
     ],
     imports: [
         BrowserModule,
@@ -37,9 +34,7 @@ import {MatInputModule} from "@angular/material/input";
         MatFormFieldModule,
         MatInputModule
     ],
-    providers: [
-        SocketioService
-    ],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
