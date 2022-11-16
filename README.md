@@ -1,27 +1,18 @@
-# Client
+# SLMax-CLient
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+This project is an online chat, the client is made on Angular
 
-## Development server
+## How to start
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `npm install`. Run `npm run start`. Navigate to `http://localhost:4200/`.
 
-## Code scaffolding
+## Online chat features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Switching and communication between different groups. Display the latest posts in the list of groups. Search for groups via input in list of groups. Ability to change profile (name and photo).
 
-## Build
+## Storage and data
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Data about all messages is stored in the database. Communication between the database and the client is done through the server (https://github.com/TheTupok/SLMax-API). User information is stored in the browser's local storage.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## How does it work
+![test-chat](https://user-images.githubusercontent.com/65355616/193932627-c7cc18b6-6c64-4fea-9bb2-38272bbc83a4.gif)
