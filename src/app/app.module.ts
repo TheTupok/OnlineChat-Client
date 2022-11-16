@@ -14,12 +14,19 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {LogInComponent} from './pages/log-in/log-in.component'
+import {ChatComponent} from './pages/chat/chat.component';
+import {AdminPanelComponent} from './pages/admin-panel/admin-panel.component';
+
 
 @NgModule({
     declarations: [
         AppComponent,
         DialogBoxComponent,
-        GroupListComponent
+        GroupListComponent,
+        LogInComponent,
+        ChatComponent,
+        AdminPanelComponent
     ],
     imports: [
         BrowserModule,

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {JwtTokenService} from "./core/services/jwt.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -9,12 +11,15 @@ import {Component, OnInit} from '@angular/core';
 export class AppComponent implements OnInit {
     title = 'Client';
 
-    constructor() {
+    constructor(private jwtService: JwtTokenService,
+                private router: Router) {
     }
 
     ngOnInit(): void {
-    }
-
-    ngOnDestroy() {
+        this.jwtService.getValidToken().subscribe((valid: boolean) => {
+            if (!valid) {
+                this.router.navigate(['/login']).then();
+            }
+        })
     }
 }
