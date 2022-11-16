@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
+
+        <div class="login">
+            <form [formGroup]="loginForm">
+                <label for="chk" aria-hidden="true" (click)="this.errorLoginMessage = ''">Login</label>
+                <input type="email" placeholder="Username" formControlName="username">
+                <input type="password" placeholder="Password" formControlName="password">
+                <button (click)="logIn()">Login</button>
+                <label class="error-label">{{this.errorLoginMessage}}</label>
+            </form>
+        </div>
+
+        <div class="signup">
+            <form [formGroup]="signUpForm">
+                <label for="chk" aria-hidden="true" (click)="this.errorLoginMessage = ''">Sign up</label>
+                <input type="text" placeholder="Username" formControlName="username">
+                <input type="password" placeholder="Password" formControlName="password">
+                <input type="password" placeholder="Repeat password" formControlName="repeatPassword">
+                <button (click)="signUp()">Sign up</button>
+                <label class="error-label">{{this.errorLoginMessage}}</label>
+            </form>
+        </div>
+    </div>
+</div>
