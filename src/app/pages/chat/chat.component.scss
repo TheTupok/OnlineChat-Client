@@ -1,0 +1,19 @@
+.container-fluid {
+  background: #252C33;
+  height: 100%;
+  box-sizing: border-box;
+
+  .row {
+    height: 100%;
+
+    app-dialog-box {
+      height: 100%;
+      box-sizing: border-box;
+      border-left: 0.5px solid #333333;
+    }
+
+    app-group-list {
+      height: 100%;
+    }
+  }
+}

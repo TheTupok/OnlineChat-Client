@@ -1,42 +1,146 @@
-<div class="header-box">
-    <div
-        class="info-current-group h-auto"
-    >
-        <img alt="" [src]="" class="m-1">
-        <label>Name Group</label>
-    </div>
+<div class="menu">
+    <a href="#" class="back">
+        <!--<i class="fa fa-angle-left"></i>--> <!--  Кнопка для версии с телефоном  -->
+        <img src="https://i.imgur.com/G4EjwqQ.jpg" draggable="false" alt=""/>
+    </a>
+    <div class="name">Random chat</div>
+    <div class="members"><b>You</b>, Marga, Charo & Brotons</div>
 </div>
-<div class="chat-area" id="chatArea">
-    <div
-        class="chat-bubble-container"
-    >
-        <img
-            class="user-image" alt="User avatar"
-            [src]=""
-        >
-        <div class="chat-bubble">
-            <div>
-                <label
-                    class="username mb-2"
-                >Имя пользователя</label>
-            </div>
-            <label>Сообщение</label>
-            <div class="chat-date">
-                12:22:12
-            </div>
+<ol class="chat">
+    <li class="other">
+        <div class="msg">
+            <div class="user">Marga<span class="range admin">Admin</span></div>
+            <p>Dude</p>
+            <p>Want to go dinner?</p>
+            <time>20:17</time>
         </div>
-    </div>
+    </li>
+    <li class="self">
+        <div class="msg">
+            <p>Puff...</p>
+            <p>I'm still doing the Góngora comment...</p>
+            <p>Better other day</p>
+            <time>20:18</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Brotons</div>
+            <p>What comment about Góngora?</p>
+            <time>20:18</time>
+        </div>
+    </li>
+    <li class="self">
+        <div class="msg">
+            <p>The comment sent Marialu</p>
+            <p>It's for tomorrow</p>
+            <time>20:18</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Brotons</div>
+            <p>Hand it to me!</p>
+            <time>20:18</time>
+        </div>
+    </li>
+    <li class="self">
+        <div class="msg">
+            <img src="https://i.imgur.com/kUPxcsI.jpg" draggable="false" alt=""/>
+            <time>20:19</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Brotons</div>
+            <p>Thank you!</p>
+            <time>20:20</time>
+        </div>
+    </li>
+    <div class="day">Today</div>
+    <li class="self">
+        <div class="msg">
+            <p>Who wants to play Minecraft?</p>
+            <time>18:03</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Charo</div>
+            <p>Come on, I didn't play it for four months</p>
+            <time>18:07</time>
+        </div>
+    </li>
+    <li class="self">
+        <div class="msg">
+            <p>Ehh, the launcher crash...</p>
+            <time>18:08</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Charo</div>
+            <p>Sure that is the base code</p>
+            <p>I told it to Mojang</p>
+            <time>18:08</time>
+        </div>
+    </li>
+    <li class="self">
+        <div class="msg">
+            <p>It's a joke</p>
+            <p>Moai attack!</p>
+            <time>18:10</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Charo</div>
+            <p>XD</p>
+            <p>Heart for this awesome design!</p>
+            <time>18:08</time>
+        </div>
+    </li>
+    <p class="notification">David joined the group
+        <time>18:09</time>
+    </p>
+    <li class="self">
+        <div class="msg">
+            <p>Heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeellooooooooooooooooooooooooooooooo David
+            </p>
+            <time>18:09</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">David</div>
+            <p>What is that ?
+            </p>
+            <time>18:10</time>
+        </div>
+    </li>
+    <p class="notification">David left the group
+        <time>18:11</time>
+    </p>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Brotons</div>
+            <p>Lol?</p>
+            <time>18:12</time>
+        </div>
+    </li>
+    <li class="other">
+        <div class="msg">
+            <div class="user">Marga<span class="range admin">Admin</span></div>
+            <p>I'm boring...</p>
+            <p>Who wants to do some logarithms?
+            </p>
+            <time>18:15</time>
+        </div>
+    </li>
+</ol>
+<div class="chat-box-tray">
+    <i class="material-icons">sentiment_very_satisfied</i>
+    <input type="text" placeholder="Type your message here...">
+    <i class="material-icons">mic</i>
+    <i class="material-icons">send</i>
 </div>
-<form>
-    <div class="footer w-100 d-flex align-items-center justify-content-center h-auto">
-    <textarea
-        id="textareaMessage"
-        type="text"
-        class="input-message-entry me-1 ps-2 m-2"
-        placeholder="Enter your message here..."
-    ></textarea>
-        <i
-            class="fa-solid fa-right-to-bracket fa-2x mx-auto"
-        ></i>
-    </div>
-</form>
