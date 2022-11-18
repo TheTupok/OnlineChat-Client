@@ -23,14 +23,6 @@ export class JwtTokenService {
         this._validToken.next(token);
     }
 
-    checkValidToken(res: string) {
-        if (res == '200') {
-            this.setValidToken(true);
-        } else {
-            this.setValidToken(false);
-        }
-    }
-
     getUserInfo(): IUser {
         const jwt = this.localStorageService.getUserJWT()
         const userInfo = atob(jwt.split('.')[1]);

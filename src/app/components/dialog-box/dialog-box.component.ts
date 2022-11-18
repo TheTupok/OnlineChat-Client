@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
+import {IUser} from "../../Models/IUser";
 
 @Component({
     selector: 'app-dialog-box',
@@ -8,10 +8,11 @@ import {Component, OnInit} from '@angular/core';
 })
 export class DialogBoxComponent implements OnInit {
 
+    public userInfo: IUser;
+
     constructor() {
     }
 
     ngOnInit(): void {
-
     }
 }

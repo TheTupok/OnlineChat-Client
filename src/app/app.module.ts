@@ -17,6 +17,9 @@ import {MatInputModule} from "@angular/material/input";
 import {LogInComponent} from './pages/log-in/log-in.component'
 import {ChatComponent} from './pages/chat/chat.component';
 import {AdminPanelComponent} from './pages/admin-panel/admin-panel.component';
+import {WebsocketModule} from "./core/websocket";
+
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -39,7 +42,10 @@ import {AdminPanelComponent} from './pages/admin-panel/admin-panel.component';
         MatDialogModule,
         MatButtonModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        WebsocketModule.config({
+            url: environment.ws
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]

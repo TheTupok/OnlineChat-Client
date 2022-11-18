@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {WebSocketService} from "../../core/services/websocket/websocket.service";
-import {Subscription} from "rxjs";
 import {LocalStorageService} from "../../core/services/localStorage.service";
 import {Router} from '@angular/router';
+import {IWsMessage, WebSocketService} from "../../core/websocket";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -17,12 +17,12 @@ export class LogInComponent implements OnInit {
     signUpForm: FormGroup;
     errorLoginMessage = '';
 
-    wsSubscription: Subscription
+    private messages$: Observable<IWsMessage>
 
     constructor(private fb: FormBuilder,
-                private wsService: WebSocketService,
                 private localStorageService: LocalStorageService,
-                private router: Router) {
+                private router: Router,
+                private wsService: WebSocketService) {
 
     }
 
@@ -32,11 +32,11 @@ export class LogInComponent implements OnInit {
 
         this.localStorageService.deleteToken();
 
-        this.wsSubscription = this.wsService.createObservableSocket()
-            .subscribe(
-                data => this.getMessageFromWs(data),
-                error => console.log(error)
-            );
+        this.messages$ = this.wsService.on();
+
+        this.messages$.subscribe(data => {
+            this.wsMessageHandler(data);
+        })
     }
 
     private _createLoginForm() {
@@ -54,10 +54,9 @@ export class LogInComponent implements OnInit {
         })
     }
 
-    getMessageFromWs(message: string) {
-        const msg = JSON.parse(message);
-        const typeOperationMsg = msg['typeOperation'];
-        const response = msg['response'];
+    wsMessageHandler(message: IWsMessage) {
+        const typeOperationMsg = message['typeOperation'];
+        const response = message['response'];
 
         if (typeOperationMsg == 'login') {
             if (response['error']) {
@@ -80,21 +79,24 @@ export class LogInComponent implements OnInit {
 
     logIn() {
         const loginUser = {
-            typeOperation: 'login',
             username: this.loginForm.controls['username'].value,
             password: this.loginForm.controls['password'].value
         }
+
         if (loginUser.username == '' || loginUser.password == '') {
             this.errorLoginMessage = 'Fill in all the fields';
         } else {
             this.errorLoginMessage = '';
-            this.wsService.sendMessage(JSON.stringify(loginUser));
+            const request = {
+                typeOperation: 'login',
+                request: loginUser
+            }
+            this.wsService.send(request);
         }
     }
 
     signUp() {
         const signUpUser = {
-            typeOperation: 'signUp',
             username: this.signUpForm.controls['username'].value,
             password: this.signUpForm.controls['password'].value
         }
@@ -106,7 +108,12 @@ export class LogInComponent implements OnInit {
             this.errorLoginMessage = 'Passwords that don\'t match';
         } else {
             this.errorLoginMessage = '';
-            this.wsService.sendMessage(JSON.stringify(signUpUser));
+
+            const request = {
+                typeOperation: 'signUp',
+                request: signUpUser
+            }
+            this.wsService.send(request);
         }
     }
 }
