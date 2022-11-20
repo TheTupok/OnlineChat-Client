@@ -5,7 +5,7 @@ import {WebSocketSubject, WebSocketSubjectConfig} from 'rxjs/webSocket';
 import {distinctUntilChanged, share, takeWhile} from 'rxjs/operators';
 import {IWebsocketService, IWsMessage, WebSocketConfig} from './websocket.interfaces';
 import {config} from './websocket.config';
-import {LocalStorageService} from "../services/localStorage.service";
+import {JwtTokenService} from "../services/jwt.service";
 
 
 @Injectable({
@@ -26,13 +26,13 @@ export class WebSocketService implements IWebsocketService, OnDestroy {
 
     private reconnectInterval: number;
     private reconnectAttempts: number;
-    private isConnected: boolean;
+    public isConnected: boolean;
 
 
     public status: Observable<boolean>;
 
     constructor(@Inject(config) private wsConfig: WebSocketConfig,
-                private localStorageService: LocalStorageService) {
+                private jwtService: JwtTokenService) {
         this.wsMessages$ = new Subject<IWsMessage>();
 
         this.reconnectInterval = wsConfig.reconnectInterval || 5000;
@@ -115,7 +115,7 @@ export class WebSocketService implements IWebsocketService, OnDestroy {
 
     public send(data: IWsMessage): void {
         if (this.isConnected) {
-            data.jwt = this.localStorageService.getUserJWT();
+            data.jwt = this.jwtService.getUserJWT();
             this.websocket$?.next(data);
         } else {
             console.error('Send error!');

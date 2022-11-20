@@ -8,20 +8,18 @@ import {LOCAL_STORAGE, StorageService} from "ngx-webstorage-service";
 
 export class LocalStorageService {
 
-    private STORAGE_KEY_TOKEN = 'Token';
-
     constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     }
 
-    getUserJWT() {
-        return this.storage.get(this.STORAGE_KEY_TOKEN)
+    getValueByKey(key: string) {
+        return this.storage.get(key)
     }
 
-    setUserJWT(data: string) {
-        this.storage.set(this.STORAGE_KEY_TOKEN, data)
+    setValueByKey(key: string, value: any) {
+        this.storage.set(key, value);
     }
 
-    deleteToken() {
-        this.storage.remove(this.STORAGE_KEY_TOKEN);
+    deleteByKey(key: string) {
+        this.storage.remove(key);
     }
 }

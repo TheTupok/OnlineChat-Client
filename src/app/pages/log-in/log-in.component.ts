@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {LocalStorageService} from "../../core/services/localStorage.service";
 import {Router} from '@angular/router';
 import {IWsMessage, WebSocketService} from "../../core/websocket";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
+import {JwtTokenService} from "../../core/services/jwt.service";
 
 
 @Component({
@@ -17,12 +17,13 @@ export class LogInComponent implements OnInit {
     signUpForm: FormGroup;
     errorLoginMessage = '';
 
-    private messages$: Observable<IWsMessage>
+    private messages$: Observable<IWsMessage>;
+    private _subscription: Subscription;
 
     constructor(private fb: FormBuilder,
-                private localStorageService: LocalStorageService,
                 private router: Router,
-                private wsService: WebSocketService) {
+                private wsService: WebSocketService,
+                private jwtService: JwtTokenService) {
 
     }
 
@@ -30,11 +31,11 @@ export class LogInComponent implements OnInit {
         this._createLoginForm();
         this._createSignUpForm();
 
-        this.localStorageService.deleteToken();
+        this.jwtService.deleteTokenJWT();
 
         this.messages$ = this.wsService.on();
 
-        this.messages$.subscribe(data => {
+        this._subscription = this.messages$.subscribe(data => {
             this.wsMessageHandler(data);
         })
     }
@@ -62,7 +63,7 @@ export class LogInComponent implements OnInit {
             if (response['error']) {
                 this.errorLoginMessage = response['error']['error-message'];
             } else {
-                this.localStorageService.setUserJWT(response);
+                this.jwtService.setUserJWT(response);
                 this.router.navigate(['']).then();
             }
         }
@@ -71,7 +72,7 @@ export class LogInComponent implements OnInit {
             if (response['error']) {
                 this.errorLoginMessage = response['error']['error-message'];
             } else {
-                this.localStorageService.setUserJWT(response);
+                this.jwtService.setUserJWT(response);
                 this.router.navigate(['']).then();
             }
         }
@@ -115,5 +116,9 @@ export class LogInComponent implements OnInit {
             }
             this.wsService.send(request);
         }
+    }
+
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
     }
 }

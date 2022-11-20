@@ -14,7 +14,6 @@ export class AppComponent implements OnInit {
     title = 'Client';
 
     private messages$: Observable<IWsMessage>;
-    private status$: Observable<boolean>;
 
     constructor(private jwtService: JwtTokenService,
                 private router: Router,
@@ -22,6 +21,10 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (!this.jwtService.getUserJWT()) {
+            this.router.navigate(['/login']).then();
+        }
+
         this.jwtService.getValidToken().subscribe((valid: boolean) => {
             if (!valid) {
                 this.router.navigate(['/login']).then();
@@ -31,13 +34,6 @@ export class AppComponent implements OnInit {
         this.messages$ = this.wsService.on();
         this.messages$.subscribe(data => {
             this.wsMessageHandler(data);
-        })
-
-        this.status$ = this.wsService.status;
-        this.status$.subscribe(status => {
-            if (status) {
-                this.wsService.send({typeOperation: 'checkJWT'});
-            }
         })
     }
 
