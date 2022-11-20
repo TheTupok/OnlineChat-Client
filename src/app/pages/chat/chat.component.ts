@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LocalStorageService} from "../../core/services/localStorage.service";
-import {Router} from "@angular/router";
-import {IWsMessage, WebSocketService} from "../../core/websocket";
-import {Observable} from "rxjs";
 import {IUser} from "../../Models/IUser";
+import {Observable, Subject, Subscription} from "rxjs";
+import {IWsMessage, WebSocketService} from "../../core/websocket";
 import {JwtTokenService} from "../../core/services/jwt.service";
 
 
@@ -15,32 +13,35 @@ import {JwtTokenService} from "../../core/services/jwt.service";
 
 export class ChatComponent implements OnInit {
 
-    private message$: Observable<IWsMessage>;
-    private status$: Observable<boolean>;
-    private userInfo: IUser;
+    private _userInfo: IUser;
+    public subjectUserInfo: Subject<IUser> = new Subject<IUser>();
 
-    constructor(private localStorageService: LocalStorageService,
-                private router: Router,
-                private wsService: WebSocketService,
-                private jwtService: JwtTokenService) {
+    private message$: Observable<IWsMessage>;
+    private _subscriptionMessage$: Subscription;
+
+    private status$: Observable<boolean>;
+    private _subscriptionStatus$: Subscription;
+
+    constructor(private jwtService: JwtTokenService,
+                private wsService: WebSocketService) {
     }
 
     ngOnInit(): void {
-        if (!this.localStorageService.getUserJWT()) {
-            this.router.navigate(['/login']).then();
-        }
+        this._userInfo = this.jwtService.getUserInfoFromJWT()
 
-        this.userInfo = this.jwtService.getUserInfo()
-
-        this.message$ = this.wsService.on()
-        this.message$.subscribe(data => {
+        this.message$ = this.wsService.on();
+        this._subscriptionMessage$ = this.message$.subscribe(data => {
             this.wsMessageHandler(data);
         })
 
+        if (this.wsService.isConnected) {
+            this.wsService.send({typeOperation: 'getUserData', request: this._userInfo.id})
+        }
+
         this.status$ = this.wsService.status;
-        this.status$.subscribe(status => {
+        this._subscriptionStatus$ = this.status$.subscribe(status => {
             if (status) {
-                this.wsService.send({typeOperation: 'getUserData', request: this.userInfo.id})
+                this.wsService.send({typeOperation: 'getUserData', request: this._userInfo.id})
             }
         })
     }
@@ -48,9 +49,14 @@ export class ChatComponent implements OnInit {
     wsMessageHandler(data: IWsMessage) {
         const typeOperation = data['typeOperation'];
 
-        if(typeOperation == 'getUserData'){
-            this.userInfo = data['response'];
-            console.log(this.userInfo)
+        if (typeOperation == 'getUserData') {
+            this.subjectUserInfo.next(data['response']);
         }
+    }
+
+    ngOnDestroy() {
+        this.wsService.send({typeOperation: 'setGroupId', request: 0});
+        this._subscriptionStatus$.unsubscribe();
+        this._subscriptionMessage$.unsubscribe();
     }
 }

@@ -33,6 +33,11 @@ $blue: #74b9ff;
   border-radius: 40px;
 }
 
+.username {
+  color: #e3e3e3;
+  margin-left: 10px;
+}
+
 .header-group {
   position: fixed;
   width: 25%;
@@ -107,6 +112,7 @@ input {
   height: 86%;
   margin-top: 140px;
   overflow: scroll;
+  background: #252C33;
 }
 
 .friend-drawer {
@@ -114,7 +120,6 @@ input {
   padding: 10px 15px;
   display: flex;
   vertical-align: baseline;
-  background: #252C33;
   transition: .3s ease;
 
   &--grey {
